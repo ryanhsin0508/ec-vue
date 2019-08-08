@@ -14,6 +14,8 @@ $js = '
 <script src="js/app.js"></script>
 <script src="components/headerComponent.js"></script>
 <script src="components/listComponent.js"></script>
+<script src="components/overlayComponent.js"></script>
+<script src="components/filterComponent.js"></script>
 
 '; 
 ?>

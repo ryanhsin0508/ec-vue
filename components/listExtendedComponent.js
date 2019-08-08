@@ -6,7 +6,7 @@ Vue.component('listExtendedComponent', {
   },
   template: `
     <div class="">
-      sss
+      <template v-if="type = 'customers'">afas</template>
     </div>
   `,
   computed: {

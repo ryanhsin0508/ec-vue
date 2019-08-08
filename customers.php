@@ -8,17 +8,19 @@
 	echo $css;
 	echo $js;
 	?>
-	<script src="components/filterComponent.js"></script>
+	
 	
 	<title>Document</title>
 </head>
 <body>
 	<section id="app">
 		<header-component title="客戶管理"></header-component>
-		<section class="content">
-			<filter-component></filter-component>
-			<list-component type="customers"></list-component>
+		<section class="content width-limiter">
+			<filter-component type="customers"></filter-component>
+			<list-component type="customers" :call="['MA002','time']"></list-component>
 		</section>
+		<overlay-component v-if="$store.state.overlayVisible" :overlay-data="$store.state.overlayData"></overlay-component>
+		<div class="overlay-mask" v-if="$store.state.overlayMask"></div>
 	</section>
 	
 </body>
