@@ -47,25 +47,15 @@ var sortLists = {
   	amount: "金額",
   	time: "日期"
   },
-  statement:[{
-    title: "單據編號	",
-    name: "number"
-  },{
-    title: "日期",
-    name: "date"
-  },  {
-    title: "發票號碼	",
-    name: "invoice"
-  }, {
-    title: "應收帳款	",
-    name: "amount"
-  }, {
-    title: "品名",
-    name: "MB002"
-  }, {
-    title: "客戶代號",
-    name: "MA001"
-  }]
+  statement:{
+  	number: "單據編號",
+  	date: "日期",
+  	invoice: "發票號碼",
+  	number: "單據編號",
+  	amount: "應收帳款	",
+  	MB002: "品名",
+  	MA001: "客戶代號"
+  }
 };
 
 

@@ -3,7 +3,7 @@ Vue.component('filterComponent', {
   data(){
     return {
       search:"",
-      sort:0,
+      sort: this.$store.state.sortBy,
       sortReverse:false,
       menuActive: false
     }
@@ -24,10 +24,10 @@ Vue.component('filterComponent', {
         <h3 @click="menuActive = menuActive ? menuActive = false : menuActive = true">{{sortList['MA002']}}</h3>
         <ul :class="{active: menuActive}">
           <li
-            v-for="(item, index) in sortList"
-            @click="sortBy(index)"
+            v-for="(v, k, i) in sortList"
+            @click="sortBy(i)"
           >
-            {{item}}
+            {{v}}
           </li>
         </ul>
       </div>
@@ -36,6 +36,7 @@ Vue.component('filterComponent', {
   computed:{
     searchBy(){
       let sortName = Object.keys(this.sortList)[this.sort];
+      console.log(sortName)
       return sortName
     },
     sortList(){
@@ -49,6 +50,7 @@ Vue.component('filterComponent', {
       this.$store.commit('searchList', this.search)
     },
     sortBy(i){
+      console.log(i)
       // this.sortReverse = false;
       if(this.sort == i){
         this.sortReverse = !this.sortReverse ? true : false;
