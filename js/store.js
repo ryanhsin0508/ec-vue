@@ -1,4 +1,4 @@
-var sortLists = {
+/*var sortLists = {
   customers: [{
     title: "名稱",
     name: "MA002"
@@ -35,9 +35,9 @@ var sortLists = {
     title: "客戶代號",
     name: "MA001"
   }]
-};
+};*/
 
-/*var sortLists = {
+var sortLists = {
   customers: {
   	MA002: "名稱",
   	time: "最後更新時間"
@@ -66,7 +66,7 @@ var sortLists = {
     title: "客戶代號",
     name: "MA001"
   }]
-};*/
+};
 
 
 

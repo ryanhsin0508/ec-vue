@@ -20,7 +20,7 @@ Vue.component('listComponent', {
             :selected="selected"
             :extended="extended"
             :data="items"
-            v-show="selected == index"
+            v-if="selected == index"
           ></list-extended-component>
         </li>
       </ul>
@@ -34,9 +34,10 @@ Vue.component('listComponent', {
       let sorted = [...this.$store.getters.filteredList];
       let sortList = this.$store.state.sortList;
       let reverse = this.$store.state.sortReverse;
-      let sortBy = this.$store.state.sortBy;
+      let sortBy = Object.keys(sortList)[this.$store.state.sortBy];
+      console.log(sortBy)
       sorted = sorted.sort((a,b)=>
-        a[sortList[sortBy]['name']] > b[sortList[sortBy]['name']] ? 1 : -1
+        a[sortBy] > b[sortBy] ? 1 : -1
       );
       if(reverse){
         return sorted.reverse()
@@ -90,7 +91,7 @@ Vue.component('listExtendedComponent', {
       if(this.extended){
         let titleList = {};
         for(i in this.$store.state.sortList){
-          
+
         }
         console.log(sortLists)
       }
