@@ -20,10 +20,10 @@ Vue.component('headerComponent', {
             </button>
             <ul :class="{active: menuActive}">
               <li><a href="customers.php">客戶管理</a></li>
-              <li><a href="accounting.php">應收帳款</a></li>
-              <li><a href="">應收對帳單</a></li>
-              <li><a href="">寄庫資料</a></li>
-              <li><a href="">借出資料</a></li>
+              <li><a href="receivable.php">應收帳款</a></li>
+              <li><a href="statement.php">應收對帳單</a></li>
+              <li><a href="posting.php">寄庫資料</a></li>
+              <li><a href="loaning.php">借出資料</a></li>
               <li><a href="">變更密碼</a></li>
               <li><a href="">登出</a></li>
             </ul>

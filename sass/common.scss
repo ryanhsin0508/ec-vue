@@ -5,7 +5,9 @@ body * {
   font-family: Arial, "微軟正黑體";
   line-height: 1.5;
 }
-
+a{
+	color: #333;
+}
 .width-limiter {
   width: 100%;
   max-width: 1000px;
@@ -266,7 +268,17 @@ header.main-header {
 .btn-detail {
   background-color: $violetblue;
 }
-
+.custom-select{
+	select{
+		font-size: 15px;
+		    height: 34px;
+		    border-radius: 5px;
+		    outline:none;
+	}
+	option{
+		outline:none;
+	}
+}
 .custom-input {
   h3 {
     font-size: 15px;
@@ -377,7 +389,10 @@ header.main-header {
   li {
     margin-top: 10px;
     margin-bottom: 10px;
-
+		p.date{
+			position: absolute;
+			right: 10px;
+		}
     .info {
       font-size: 15px;
       padding: 10px;
@@ -402,11 +417,23 @@ header.main-header {
       }
     }
 		.list-extended:not(.no-style){
+			position: relative;
 			font-size: 15px;
 			border-bottom-left-radius: 5px;
 			border-bottom-right-radius: 5px;
 			border: 1px solid $ef-green;
-			padding: 0 10px;
+			padding: 10px;
+			li{
+				margin: 0;
+			}
+			p{
+				margin-right: 10px;
+			}
+			.date{
+				right: 0;
+				bottom: 5px;
+				color: $ef-green;
+			}
 		}
   }
 
@@ -475,7 +502,7 @@ header.main-header {
     border: 1px solid #cccccc;
     width: 100%;
     box-sizing: border-box;
-
+		z-index: 9;
     &.active {
       display: block;
     }
@@ -530,7 +557,9 @@ header.main-header {
     width: 100%;
   }
 }
-
+.overlay-enter-active, .overlay-leave-active {
+  transition: all .5s;
+}
 .overlay-enter {
   opacity: 0;
 }
@@ -544,3 +573,11 @@ header.main-header {
   -webkit-transform: scale(1.1);
   transform: scale(1.1);
 }
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
+}
+
+

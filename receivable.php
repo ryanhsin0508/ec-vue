@@ -14,10 +14,10 @@
 </head>
 <body>
 	<section id="app">
-		<header-component title="客戶管理"></header-component>
+		<header-component title="應收帳款"></header-component>
 		<section class="content">
-			<filter-component type="accounting"></filter-component>
-			<list-component type="accounting" :call="['MA002','amount','time']"></list-component>
+			<filter-component type="receivable"></filter-component>
+			<list-component type="receivable" :call="['MA002','amount','time']"></list-component>
 		</section>
 		<overlay-component v-if="$store.state.overlayVisible" :overlay-data="$store.state.overlayData"></overlay-component>
 		<div class="overlay-mask" v-if="$store.state.overlayMask"></div>

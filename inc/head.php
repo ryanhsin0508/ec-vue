@@ -8,6 +8,7 @@ $css = '
 ';
 $js = '
 <script src="js/jquery-3.4.1.min.js"></script>
+<script src="js/common.js"></script>
 <script src="js/vue-2.6.1.js"></script>
 <script src="js/vuex-3.1.1.js"></script>
 <script src="js/store.js"></script>

@@ -36,25 +36,36 @@
     name: "MA001"
   }]
 };*/
-
+var titleName = {
+	MA001: "客戶代號",
+	MA002: "客戶",
+	MB002: "最後交易時間",
+	MONTH: "月份",
+	AMOUNT: "金額"
+};
 var sortLists = {
   customers: {
   	MA002: "名稱",
-  	time: "最後更新時間"
+  	time: "最後交易時間"
   },
-  accounting:{
+  receivable:{
   	MA002: "名稱",
   	amount: "金額",
   	time: "日期"
   },
   statement:{
   	number: "單據編號",
-  	date: "日期",
   	invoice: "發票號碼",
+  	date: "日期",
   	number: "單據編號",
   	amount: "應收帳款	",
   	MB002: "品名",
   	MA001: "客戶代號"
+  },
+  posting:{
+  	MA001: "客戶代號",
+  	MA002: "客戶名稱",
+
   }
 };
 
@@ -141,14 +152,14 @@ var store = new Vuex.Store({
       let sorted = []
       console.log(type)
       $.ajax({
-        url: '/ec-vue/json/data.json',
+        url: `/ec-vue/json/${type}.json`,
         async: false,
         success: (data) => {
           list = data
           console.log(data)
         }
       })
-      state.list = list[type]['list']
+      state.list = list['data']
       state.sortList = sortLists[type];
     }
   }

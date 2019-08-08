@@ -14,12 +14,12 @@
 </head>
 <body>
 	<section id="app">
-		
+
 		<header-component title="客戶管理"></header-component>
 		<section class="content">
 			<filter-component type="statement"></filter-component>
 			<list-component 
-				type="statement" 
+				type="posting" 
 				:call="['number','invoice','date']" 
 				:extended="['MB002', 'MA001', 'amount']">
 			</list-component>

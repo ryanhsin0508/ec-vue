@@ -6,8 +6,8 @@ Vue.component('listComponent', {
     }
   },
   template: `
-    <section class="list list-st1">
-      <ul>
+    <section class="list">
+      <ul class="list-st1">
         <li 
           v-for="(items, index) in filteredList" 
           :class="[type, {active:selected == index}]"
@@ -80,23 +80,13 @@ Vue.component('listExtendedComponent', {
         <ul>
           <li v-for="(item, index) in extended" :class="item">
             <template v-if="item == 'MB002'">{{data[item]}} {{data['MB003']}}</template>
-            <template v-else>{{data[item]}}</template>
+            <template v-else>{{$store.state.sortList[item]}}: {{data[item]}}</template>
           </li>
         </ul>
       </template>
     </div>
   `,
   computed: {
-    extendedList() {
-      if(this.extended){
-        let titleList = {};
-        for(i in this.$store.state.sortList){
-
-        }
-        console.log(sortLists)
-      }
-      return this.$store.state.sortList;
-    }
   },
   created(){
     // this.$store.commit('init', this.type)

@@ -1,7 +1,7 @@
 Vue.component('overlayComponent', {
-  props:['overlayData'],
+  props: ['overlayData'],
   template: `
-    <transition name="overlay">
+    <transition name="fade">
       <div class="overlay-mask">
         <div class="overlay-wrapper">
           <order-component v-if="$store.state.overlayType == 'order'" :overlay-data="overlayData"></order-component>
@@ -10,36 +10,37 @@ Vue.component('overlayComponent', {
       </div>
     </transition>
     `,
-    mounted(){
-      console.log(this.$store.state.overlayType)
-    }
+  mounted() {
+    console.log(this.$store.state.overlayType)
+  }
 })
-Vue.component('orderComponent',{
-  props:['overlayData'],
-  data(){
-    return{
-      formData:{
-        type:"",
-        note1:"",
-        note2:"",
-        note3:""
+Vue.component('orderComponent', {
+  props: ['overlayData'],
+  data() {
+    return {
+      orderData: {
+        type: "",
+        note1: "",
+        note2: "",
+        note3: "",
+        products: [{
+          selected: 0,
+          count: 0,
+          gift: 0,
+          note: ""
+        }]
       },
-      productList:[],
-      products:[{
-        selected:0,
-        count:0,
-        gift:0,
-        note:""
-      }],
-      productTemplate:{
-        selected:0,
-        count:0,
-        gift:0,
-        note:""
+      typeList: [],
+      productList: [],
+      productTemplate: {
+        selected: 0,
+        count: 0,
+        gift: 0,
+        note: ""
       }
     }
   },
-  template:`
+  template: `
     <div class="overlay-container">
     
       <header class="flex">
@@ -57,36 +58,42 @@ Vue.component('orderComponent',{
           <div class="custom-input hor">
             <input type="date" style="width:100%;"/>
             <ul>
-              <li><h3>單據別</h3><input type="text" /></li>
-              <li><h3>內部備註</h3><input type="text" /></li>
-              <li><h3>外部備註</h3><input type="text" /></li>
-              <li><h3>單據備註</h3><input type="text" /></li>
+              <li class="custom-select">
+                <h3>單據別</h3>
+                <select v-model="orderData.type">
+                  <option value="0" selected disabled hidden>選擇商品：</option>
+                  <option v-for="(item, index) in typeList" :value="item">{{item}}</option>
+                </select>
+              </li>
+              <li><h3>內部備註</h3><input type="text" v-model="orderData.note1"/></li>
+              <li><h3>外部備註</h3><input type="text" v-model="orderData.note2"/></li>
+              <li><h3>單據備註</h3><input type="text" v-model="orderData.note3"/></li>
             </ul>
           </div>
-          <div class="custom-input hor sp" v-for="(item, index) in products">
+          <div class="custom-input hor sp" v-for="(item, index) in orderData.products">
             <ul>
-              <li>
+              <li class="custom-select">
                 <h3>商品名稱</h3>
-                <select v-model="products[index].selected">
+                <select v-model="orderData.products[index].selected">
                   <option value="0" selected disabled hidden>選擇商品：</option>
-                  <option v-for="(item, index) in productList" :value="index"><span class="name">{{item['MB002']}}</span> <span class="spec">{{item['MB003']}}</span></option>
+                  <option v-for="(item, index) in productList" :value="item.MB002 + ' ' + item.MB003"><span class="name">{{item['MB002']}}</span> <span class="spec">{{item['MB003']}}</span></option>
                 </select>
               </li>
               <li class="counter">
                 <h3>數量</h3>
-                <span class="btn-minus" @click="products[index].count > 0 ? products[index].count-- : products[index].count = 0">-</span>
-                <input type="number" v-model="products[index].count"/>
-                <span @click="products[index].count++">+</span>
+                <span class="btn-minus" @click="orderData.products[index].count > 0 ? orderData.products[index].count-- : orderData.products[index].count = 0">-</span>
+                <input type="number" v-model="orderData.products[index].count"/>
+                <span @click="orderData.products[index].count++">+</span>
               </li>
               <li class="counter">
                 <h3>贈品量</h3>
-                <span class="btn-minus" @click="products[index].gift > 0 ? products[index].gift-- : products[index].gift = 0">-</span>
-                <input type="number" v-model="products[index].gift" />
-                <span @click="products[index].gift++">+</span>
+                <span class="btn-minus" @click="orderData.products[index].gift > 0 ? orderData.products[index].gift-- : orderData.products[index].gift = 0">-</span>
+                <input type="number" v-model="orderData.products[index].gift" />
+                <span @click="orderData.products[index].gift++">+</span>
               </li>
               <li>
                 <h3>商品備註</h3>
-                <input type="text" />
+                <input type="text" v-model="orderData.products[index].note" />
               </li>
             </ul>
           </div>
@@ -107,41 +114,57 @@ Vue.component('orderComponent',{
     
     </div>
   `,
-  methods:{
-    addProduct(){
-      this.products.push(this.productTemplate);
+  methods: {
+    addProduct() {
+      this.orderData.products.push(this.productTemplate);
     }
   },
-  beforeMount(){
+  beforeMount() {
     $.ajax({
-      url: '/ec-vue/json/data.json',
+      url: '/ec-vue/json/newOrder.json',
       async: false,
       success: (data) => {
-        this.productList = data.get_products
-        console.log(data.get_products)
+        this.productList = data.data;
+        this.typeList = data.type;
       }
     })
   }
 })
 Vue.component('detailComponent', {
-  props:['overlayData'],
-  template:`
+  props: ['overlayData'],
+  data(){
+    return{
+      orders:[]
+    }
+  },
+  template: `
   <div class="overlay-container">
     <header class="flex">
       <h3>「{{overlayData.MA002}}」明細</h3>
       <button class="btn-close" @click="$store.commit('closeOverlay')"></button>
     </header>
     <main class="content">
-    <filter-component type="customers"></filter-component>
+      <filter-component type="customers"></filter-component>
+      <ul class="list-st1">
+        <li class="active" v-for="item in orders">
+          <div class="info">{{item.product}}</div>
+          <div class="list-extended" style="padding-bottom:calc(1em + 10px)">
+            <p style="float:left">數量：{{item.count}}</p>
+            <p>贈品：{{item.gift}}</p>
+            <p>備註：{{item.note}}</p>
+            <p class="date">{{item.date}}</p>
+          </div>
+        </li>
+      </ul>
     </main>
   </div>
   `,
   computed: {
-    filteredList(){
+    filteredList() {
 
     }
   },
-  beforeMount(){
-
+  beforeMount() {
+    this.orders = getData().data;
   }
 })
