@@ -21,7 +21,7 @@ Vue.component('filterComponent', {
         <button class="btn-search"><i class="fas fa-search"></i></button>
       </div>
       <div class="sort dropdown-menu">
-        <h3 @click="menuActive = menuActive ? menuActive = false : menuActive = true">{{sortList['MA002']}}</h3>
+        <h3 @click="menuActive = menuActive ? menuActive = false : menuActive = true">{{sortList[Object.keys(sortList)[sort]]}}</h3>
         <ul :class="{active: menuActive}">
           <li
             v-for="(v, k, i) in sortList"
@@ -54,6 +54,8 @@ Vue.component('filterComponent', {
       // this.sortReverse = false;
       if(this.sort == i){
         this.sortReverse = !this.sortReverse ? true : false;
+      } else {
+        this.sortReverse = false;
       }
       this.sort = i;
       this.menuActive = false;
