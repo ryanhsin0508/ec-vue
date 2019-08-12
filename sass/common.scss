@@ -291,6 +291,7 @@ header.main-header {
     border: 1px solid #bbbbbb;
     padding: 0 10px;
     box-sizing: border-box;
+    max-width: 100%;
   }
 
   .counter {
@@ -383,12 +384,19 @@ header.main-header {
     }
   }
 }
+.search-box{
+	.date{
 
+	}
+}
 .list-st1 {
 
   li {
     margin-top: 10px;
     margin-bottom: 10px;
+    p:not(:last-child){
+    	margin-right: 10px;
+    }
 		p.date{
 			position: absolute;
 			right: 10px;
@@ -399,14 +407,17 @@ header.main-header {
       background-color: #666;
       border-radius: 5px;
       color: #ffffff;
-			p:first-child{
+			p{
+				&:first-child{
 				width: 120px;
+				}
+				&:last-child{
+					width: auto !important;
+				}
 			}
       .MA002 {width: 100px;}
     }
-		.MB002{
-			color: $ef-green;
-		}
+		
     &.active {
       .info {
       	border-bottom-left-radius: 0;
@@ -422,7 +433,36 @@ header.main-header {
 			border-bottom-left-radius: 5px;
 			border-bottom-right-radius: 5px;
 			border: 1px solid $ef-green;
-			padding: 10px;
+			padding: 0 10px;
+			.custom-input{
+				margin-top: 10px;
+				margin-bottom: 0;
+			}
+			ul{
+				margin-bottom: 10px;
+			}
+			.date{
+				position: absolute;
+			}
+			.items{
+				>li{
+					position: relative;
+					border-bottom: 1px solid $ef-green;
+					padding-top: 10px;
+					padding-bottom: 20px;
+					&:first-child{
+						// padding-top: 0;
+					}
+					&:last-child{
+					}
+				}
+			}
+			.MB002{
+				color: $ef-green;
+			}
+			.amount{
+				color: #ff8181;
+			}
 			li{
 				margin: 0;
 			}

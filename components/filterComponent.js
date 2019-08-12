@@ -5,7 +5,9 @@ Vue.component('filterComponent', {
       search:"",
       sort: this.$store.state.sortBy,
       sortReverse:false,
-      menuActive: false
+      menuActive: false,
+      startDate:"",
+      endDate:""
     }
   },
   template:`
@@ -37,11 +39,32 @@ Vue.component('filterComponent', {
     searchBy(){
       let sortName = Object.keys(this.sortList)[this.sort];
       console.log(sortName)
-      return sortName
+      return sortName 
     },
     sortList(){
       console.log(this.$store.state.sortList)
       return this.$store.state.sortList;
+    },
+    dateRange() {
+        return [this.startDate.replace(/-/gi, ''),this.endDate.replace(/-/gi, '')]
+    }
+  },
+  filters:{
+    dateFormat(v){
+      if(v){
+        return v.replace('-','')
+      }
+    }
+  },
+  updated(){
+    this.$store.commit('dateRange', this.dateRange)
+  },
+  watch:{
+    startDate(){
+      
+    },
+    endDate(){
+
     }
   },
   methods:{

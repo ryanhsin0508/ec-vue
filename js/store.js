@@ -38,29 +38,28 @@
 };*/
 var titleName = {
 	MA001: "客戶代號",
-	MA002: "客戶",
-	MB002: "最後交易時間",
+	MA002: "客戶名",
+	MB002: "品名",
 	MONTH: "月份",
-	AMOUNT: "金額"
+	date: "日期",
+	number: "單據編號",
+	amount: "金額",
+	invoice: "發票號碼"
 };
 var sortLists = {
   customers: {
-  	MA002: "名稱",
+  	MA002: "客戶名",
   	time: "最後交易時間"
   },
   receivable:{
-  	MA002: "名稱",
+  	MA002: "客戶名",
   	amount: "金額",
   	time: "日期"
   },
   statement:{
-  	number: "單據編號",
-  	invoice: "發票號碼",
-  	date: "日期",
-  	number: "單據編號",
-  	amount: "應收帳款	",
-  	MB002: "品名",
+  	MA002: "客戶名",
   	MA001: "客戶代號"
+
   },
   posting:{
   	MA001: "客戶代號",
@@ -88,7 +87,9 @@ var store = new Vuex.Store({
     sortList: [{}],
     sortBy: 0,
     sortReverse:false,
+    dateRange:[],
     list: [],
+    titleName: titleName,
     selectedList: undefined,
     overlayMask: false,
     overlayVisible: false,
@@ -117,6 +118,9 @@ var store = new Vuex.Store({
     },
     searchList(state, val) {
       state.search = val;
+    },
+    dateRange(state, arr){
+    	state.dateRange = arr
     },
     memorizeSort() {
 

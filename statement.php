@@ -14,14 +14,13 @@
 </head>
 <body>
 	<section id="app">
-		
-		<header-component title="客戶管理"></header-component>
+		<header-component title="應收對帳單"></header-component>
 		<section class="content">
 			<filter-component type="statement"></filter-component>
 			<list-component 
 				type="statement" 
-				:call="['number','invoice','date']" 
-				:extended="['MB002', 'MA001', 'amount']">
+				:call="['MA002','MA001']" 
+				:extended="['MB002', 'invoice', 'date', 'amount', 'number']">
 			</list-component>
 		</section>
 		<overlay-component v-if="$store.state.overlayVisible" :overlay-data="$store.state.overlayData"></overlay-component>

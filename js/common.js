@@ -7,7 +7,7 @@
     //Error during request
   }).responseText;
 }*/
-var token = getToken();
+// var token = getToken();
 function getData(url){
   return JSON.parse($.ajax({
       url: '/ec-vue/json/orders.json',

@@ -1,0 +1,231 @@
+body * {
+  font-family: Arial, '微軟正黑體';
+  line-height: 1.5;
+  font-size: 13px;
+}
+
+.width-limiter {
+  width: 800px;
+  margin: 0 auto;
+}
+
+.flex {
+  display: flex;
+
+  >.t-center {
+    text-align: center;
+  }
+
+  &.start {
+    justify-content: flex-start;
+  }
+
+  &.end {
+    justify-content: flex-end;
+  }
+
+  &.center {
+    justify-content: center;
+  }
+
+  &.column {
+    flex-direction: column;
+  }
+
+  &.between {
+    justify-content: space-between;
+  }
+
+  &.around {
+    justify-content: space-around;
+  }
+
+  &.v-center {
+    align-items: center;
+  }
+
+  &.v-top {
+    align-items: flex-start;
+  }
+
+  &.equal {
+    >* {
+      flex-grow: 1;
+    }
+  }
+
+  &.wrap {
+    flex-wrap: wrap;
+  }
+
+  .full {
+    flex-grow: 1;
+  }
+
+
+}
+
+.grid2 {
+  @extend .flex;
+
+  >* {
+    width: 50%;
+  }
+}
+
+.grid3 {
+  @extend .flex;
+
+  >* {
+    width: calc(100% / 3 - 5px);
+  }
+}
+
+.grid4 {
+  @extend .flex;
+
+  >* {
+    width: calc(25% - 5px);
+  }
+}
+
+.grid5 {
+  @extend .flex;
+
+  >* {
+    width: calc(100% / 5 - 5px);
+    margin-right: 5px;
+
+    &:nth-child(5n) {
+      margin-right: 0;
+    }
+  }
+}
+
+.grid6 {
+  @extend .flex;
+
+  >* {
+    width: calc(100% / 6 - 5px);
+    margin-right: 5px;
+
+    &:nth-child(6n) {
+      margin-right: 0;
+    }
+  }
+}
+
+table {
+  width: 100%;
+	h3{
+		float: left;
+	}
+	p{
+		float: left;
+	}
+  tbody {
+    display: flex;
+    flex-direction: column;
+
+    tr {
+      display: flex;
+      padding-left: 1em;
+      padding-right: 1em;
+      padding-top: 5px;
+      padding-bottom: 5px;
+
+      &:nth-child(2n) {
+        background-color: #ddd;
+      }
+    }
+
+    th {
+      white-space: nowrap;
+    }
+
+    td {
+      width: 100%;
+    }
+  }
+}
+
+.blank {
+  tr:nth-child(2n) {
+    background-color: transparent;
+  }
+}
+
+.bg-colored {
+  background-color: #ddd !important;
+}
+
+.heading {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 2px solid gray;
+  align-items: flex-end;
+  padding-top: 10px;
+  padding-bottom: 10px;
+
+  h1 {
+    font-size: 24px;
+  }
+}
+
+.content>ul>li {
+  display: flex;
+  padding: 20px 0px;
+  border-bottom: 1px solid gray;
+
+  h2 {
+    width: 1em;
+    margin-right: 2em;
+  }
+
+  >div {
+    flex-grow: 1;
+
+    >ul {
+    	
+      >li {
+        padding: 5px 1em;
+        >ul{
+        	margin-top: -5px;
+        	margin-bottom: -5px;
+        }
+      }
+      li{
+      	padding-top: 5px;
+      	padding-bottom: 5px;
+      }
+    }
+  }
+}
+
+.footer {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  margin-left: -400px;
+  text-align: right;
+
+  li {
+    margin-left: 50px;
+  }
+}
+
+.basic {
+  table {
+    td {
+      min-width: 25%;
+    }
+  }
+}
+
+.physiological {
+  table {
+    td {
+      min-width: 50%;
+    }
+  }
+}
