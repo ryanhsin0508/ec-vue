@@ -8,35 +8,18 @@
   <link rel="stylesheet" href="css/report.css">
   <script src="js/jquery-3.4.1.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.2.61/jspdf.min.js"></script>
+  <script src="js/jsPdf.debug.js"></script>
   <script>
   $(function() {
-    function add_iframe() {
-
-      var html_content = $('#content').html();
-      $("#download").contents().find("#wrapper").html(html_content);
-      setTimeout(function() {
-        $("#download").get(0).contentWindow.print_html();
-      }, 500)
-    }
-
-    function print_html() {
-      var random = new Date().getTime();
-      var pdf = new jsPDF('p', 'pt', 'a4');
-      // 設置輸出比例 數值越大比列越小
-      pdf.internal.scaleFactor = 2;
-      var options = {
-        pagesplit: true, //設置是否自動分頁
-        "background": '#ffffff' //如果導出的pdf為黑色背景，需要將導出的html模塊內容背景 設置成白色。
-      };
-      var printHtml = $('#download').get(0); // 頁面某一個div裏面的內容，通過id獲取div內容
-      pdf.addHTML(printHtml, 15, 15, options, function() {
-        pdf.save('htmltopdf_' + random + '.pdf');
-        parent.closeLoading();
-      });
-    }
     $('#cmd').click(()=>{
-      print_html()
+      exportPDF()
     })
+    function exportPDF() {
+    var doc = new jsPDF('p', 'pt');
+    //pdf標題設定
+    doc.text(20, 20, 'hello world!');
+    doc.save('匯出.pdf');
+    }
   })
   </script>
 </head>

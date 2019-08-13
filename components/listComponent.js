@@ -54,7 +54,7 @@ Vue.component('listComponent', {
     updatePrimary(swapped) {
       let currentPrimary = this.call[0];
       let idx;
-      if (swapped == 'date') {
+      if (swapped == 'date' || swapped == 'time') {
         return;
       }
       if (this.callArr.indexOf(swapped) >= 0) {
@@ -141,7 +141,7 @@ Vue.component('listExtendedComponent', {
       return [this.startDate.replace(/-/gi, ''),this.endDate.replace(/-/gi, '')]
     },
     filteredItems(){
-      let items = [...this.data.items];
+      let items = this.data.items;
       let startDate = this.dateRange[0] ? this.dateRange[0] : 0;
       let endDate = this.dateRange[1] ? this.dateRange[1] : 99999999;
       items = items.filter(m=>(m.date >= startDate && m.date <= endDate))
