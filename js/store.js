@@ -44,7 +44,9 @@ var titleName = {
 	date: "日期",
 	number: "單據編號",
 	amount: "金額",
-	invoice: "發票號碼"
+	invoice: "發票號碼",
+	count: "數量",
+	gift: "贈品量"
 };
 var sortLists = {
   customers: {
@@ -62,9 +64,8 @@ var sortLists = {
 
   },
   posting:{
-  	MA001: "客戶代號",
   	MA002: "客戶名稱",
-
+  	MA001: "客戶代號"
   }
 };
 

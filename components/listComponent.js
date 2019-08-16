@@ -11,22 +11,30 @@ Vue.component('listComponent', {
       <ul class="list-st1">
         <li 
           v-for="(items, index) in filteredList" 
-          :class="[type, {active:selected == index}]"
+          :class="[type, {active:selected == index && (extended || type == 'customers')}]"
           @click="$store.commit('setNumber',{i:index,t:'selectedList'})">
           <div class="info flex between">
-          <p v-for="v in callArr" :class="v">{{items[v]}}</p>
+          <p v-for="v in callArr" :class="v">
+            <template v-if="v == 'amount'">{{items[v] | dollarConvert}}</template>
+            <template v-else>{{items[v]}}</template>
+          </p>
           </div>
           <list-extended-component
             :type="type"
             :selected="selected"
             :extended="extendedArr"
             :data="items"
-            v-if="selected == index"
+            v-if="selected == index && (extended || type == 'customers')"
           ></list-extended-component>
         </li>
       </ul>
     </section>
   `,
+  filters:{
+    dollarConvert(v){
+      return v = '$' + parseInt(v).toLocaleString('en-US');
+    }
+  },
   computed: {
     selected() {
       return this.$store.state.selectedList
@@ -82,6 +90,7 @@ Vue.component('listExtendedComponent', {
       endDate:""
     }
   },
+
   template: `
     <div class="list-extended" :class="{'no-style': type == 'customers'}" @click.stop>
       <template v-if="type == 'customers'">
@@ -102,6 +111,7 @@ Vue.component('listExtendedComponent', {
       <template v-else>
           <ul class="custom-input grid2 spacing10 between" v-if="type == 'statement'">
             <li>
+              <date-component @updateDate="updateDate()"></date-component>
               <input type="date" v-model="startDate" />
             </li>
             <li>
@@ -111,9 +121,22 @@ Vue.component('listExtendedComponent', {
         <ul class="items">
           <li v-for="(item, index) in filteredItems">
             <ul>
-              <li v-for="(key, index) in extended" :class="key">
-                <template v-if="key == 'MB002'">{{item[key]}} {{item['MB003']}}</template>
-                <template v-else><template v-if="key != 'date'">{{$store.state.titleName[key]}}: </template>{{item[key]}}</template>
+              <li v-for="(key, index) in extended" 
+                :class="key" :style="[key=='count' ? {float:'left', marginRight:'10px'} : {}]"
+              >
+                <template v-if="key == 'MB002'">
+                  {{item[key]}} {{item['MB003']}}
+                </template>
+                
+                <template v-else>
+                  <template v-if="key != 'date'">
+                    {{$store.state.titleName[key]}}: 
+                  </template>
+                  <template v-if="key == 'amount'">
+                    {{item[key] | dollarConvert}}
+                  </template>
+                  <template v-else>{{item[key]}}</template>
+                </template>
               </li>
             </ul>
           </li>
@@ -129,6 +152,11 @@ Vue.component('listExtendedComponent', {
 
     </div>
   `,
+  filters:{
+    dollarConvert(v){
+      return v = '$' + parseInt(v).toLocaleString('en-US');
+    }
+  },
   computed:{
     totalAmount(){
       let amount = 0;
@@ -138,20 +166,22 @@ Vue.component('listExtendedComponent', {
       return amount;
     },
     dateRange(){
-      return [this.startDate.replace(/-/gi, ''),this.endDate.replace(/-/gi, '')]
+      return [this.startDate,this.endDate]
     },
     filteredItems(){
       let items = this.data.items;
       let startDate = this.dateRange[0] ? this.dateRange[0] : 0;
       let endDate = this.dateRange[1] ? this.dateRange[1] : 99999999;
-      items = items.filter(m=>(m.date >= startDate && m.date <= endDate))
+      if(items){
+        items = items.filter(m=>(m.date >= startDate && m.date <= endDate))
+      }
       return items;
     }
   },
   methods:{
-
+    
   },
-  created() {
-    // this.$store.commit('init', this.type)
+  beforeMount() {
+    
   }
 })

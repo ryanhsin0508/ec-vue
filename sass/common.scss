@@ -268,6 +268,65 @@ header.main-header {
 .btn-detail {
   background-color: $violetblue;
 }
+.custom-date{
+	position: relative;
+	h3{
+		line-height: 36px;
+		border: 1px solid #bbb;
+		border-radius: 5px;
+		padding: 0 10px;
+	}
+	.opt{
+		position: absolute;
+		width: 100%;
+		top: 36px;
+		left: 0;
+		background-color: #ffffff;
+		z-index: 9;
+		border: 1px solid #bbb;
+		box-sizing: border-box;
+		border-radius: 5px;
+		max-height:240px;
+		overflow: auto;
+		.c-year{
+			color: $violetblue;
+			margin: 0 !important;
+
+		}
+		.c-month{
+			margin-top: 0 !important;
+			color: #ffffff;
+			background-color: $violetblue;
+			&.active{
+				color: #333;
+				background-color: transparent;
+				display: flex;
+				flex-wrap:wrap;
+				li{
+					width: calc(100% / 3);
+					border: 1px solid #ccc;
+					box-sizing: border-box;
+					&.active{
+						color: #ffffff;
+						background-color: $violetblue;
+					}
+				}
+			}
+		}
+		.c-date{
+			li{
+				border-bottom: 1px solid #ccc;
+			}
+		}
+		li{
+			line-height: 36px;
+			text-align: center;
+			width: 80%;
+			margin:0 auto!important;
+			
+		}
+	}
+}
 .custom-select{
 	select{
 		font-size: 15px;
@@ -451,7 +510,7 @@ header.main-header {
 					padding-top: 10px;
 					padding-bottom: 20px;
 					&:first-child{
-						// padding-top: 0;
+						padding-top: 0;
 					}
 					&:last-child{
 					}

@@ -17,11 +17,11 @@
 
 		<header-component title="寄庫資料"></header-component>
 		<section class="content">
-			<filter-component type="statement"></filter-component>
+			<filter-component type="posting"></filter-component>
 			<list-component 
 				type="posting" 
-				:call="['number','invoice','date']" 
-				:extended="['MB002', 'MA001', 'amount']">
+				:call="['MA001', 'MA002']" 
+				:extended="['MB002','count', 'gift', 'date']">
 			</list-component>
 		</section>
 		<overlay-component v-if="$store.state.overlayVisible" :overlay-data="$store.state.overlayData"></overlay-component>
