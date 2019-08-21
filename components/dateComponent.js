@@ -11,6 +11,11 @@ Vue.component('dateComponent', {
         m:5,
         d:10
       },
+      temp: {
+        y:'',
+        m:'',
+        d:''
+      },
       dropdownActive: false,
       yearActive:false,
       monthActive:false,
@@ -20,20 +25,23 @@ Vue.component('dateComponent', {
 
     }
   },
+  props:['date'],
   template: `
     <div class="custom-date">
-      <h3 @click="showDropdown()">{{selectedFullDate}}</h3>
+      <h3 @click="showDropdown()">{{date}}</h3>
       <div class="opt" v-if="dropdownActive">
         <ul :class="['c-year', {active:yearActive}]">
-          <li>
-            {{selected.y}}
+          <li class="flex v-center between">
+            <button class="btn-minus" @click.prevent="yearHandler('-1')"></button>
+              {{temp.y}}
+            <button class="btn-add" @click.prevent="yearHandler('+1')"></button>
           </li>
         </ul>
         <ul :class="['c-month', {active:monthActive}]">
           <li 
             v-for="(item, index) in monthArr" 
-            v-if="item + 1 == selected.m || monthActive"
-            :class="{active: item + 1 == selected.m}"
+            v-if="item + 1 == temp.m || monthActive"
+            :class="{active: item + 1 == temp.m}"
             @click.stop="monthHandler(item+1)"
           >
             {{item+1}}月
@@ -42,7 +50,10 @@ Vue.component('dateComponent', {
         <ul class="c-date">
           <li 
             v-for="(item, index) in dateArr"
-            :class="{active: selected.y == now.y && selected.m == now.m && selected.d == now.d}"
+            :class="
+            [
+              {now: temp.y == now.y && temp.m == now.m && item == now.d}
+            ]"
             @click="dateHandler(item)"
           >{{item}}日
           </li>
@@ -51,24 +62,31 @@ Vue.component('dateComponent', {
     </div>
   `,
   methods:{
+    yearHandler(n){
+      console.log('faswuodifh')
+      this.temp.y = eval(this.temp.y + n);
+      this.calcDate();
+    },
     monthHandler(m){
       this.monthActive = this.monthActive ? false : true;
       if(this.monthActive){
         return;
       }
-      this.selected.m = m;
+      this.temp.m = m;
       this.calcDate();
     },
     dateHandler(d){
       this.dropdownActive = false;
+      this.temp.d = d;
+      this.selected.y = this.temp.y;
+      this.selected.m = this.temp.m;
       this.selected.d = d;
     },
     calcDate(){
       this.dateArr = [];
-      var now = new Date();
-      var y = this.selected.y
-      var m = this.selected.m;
-      var d = this.selected.d
+      var y = this.temp.y
+      var m = this.temp.m;
+      var d = this.temp.d;
       var start = new Date(`${m}/1/${y}`);
       var end = m < 12 ? new Date(`${m+1}/1/${y}`) : new Date(`1/1/${y+1}`);
       console.log(end)
@@ -90,7 +108,6 @@ Vue.component('dateComponent', {
     },
     showDropdown(){
       this.dropdownActive = this.dropdownActive ? false : true;
-      
       if(!this.dropdownActive){
         return;
       }
@@ -102,10 +119,15 @@ Vue.component('dateComponent', {
     var now = new Date();
     this.now.y = now.getFullYear()
     this.now.m = now.getMonth() < 11 ? now.getMonth() + 1 : 1;
-    this.now.d = now.getDate()
-
+    this.now.d = now.getDate();
+    this.selected.y = parseInt(this.date.substr(0,4));
+    this.selected.m = parseInt(this.date.substr(4,2));
+    this.selected.d = parseInt(this.date.substr(6,2));
+    this.temp.y = parseInt(this.date.substr(0,4));
+    this.temp.m = parseInt(this.date.substr(4,2));
+    this.temp.d = parseInt(this.date.substr(6,2));
     for(let i = 0; i < 12; i++){
-      this.monthArr.push(i)
+      this.monthArr.push(i);
     }
   },
   computed:{
@@ -117,5 +139,9 @@ Vue.component('dateComponent', {
       d = d.toString().length<2 ? '0' + d : d;
       return '' + y + m + d
     }
+  },
+  updated(){
+    
+    this.$emit('update', this.selectedFullDate)
   }
 })

@@ -24,7 +24,7 @@ Vue.component('listComponent', {
             :selected="selected"
             :extended="extendedArr"
             :data="items"
-            v-if="selected == index && (extended || type == 'customers')"
+            v-if="(selected == index && (extended || type == 'customers')) || $root.window.width > 640"
           ></list-extended-component>
         </li>
       </ul>
@@ -111,11 +111,11 @@ Vue.component('listExtendedComponent', {
       <template v-else>
           <ul class="custom-input grid2 spacing10 between" v-if="type == 'statement'">
             <li>
-              <date-component @updateDate="updateDate()"></date-component>
-              <input type="date" v-model="startDate" />
+              <date-component :date="startDate" @update="updateStartDate"></date-component>
             </li>
             <li>
-              <input type="date" v-model="endDate" />
+              <date-component :date="endDate" @update="updateEndDate"></date-component>
+              
             </li>
           </ul>
         <ul class="items">
@@ -179,9 +179,19 @@ Vue.component('listExtendedComponent', {
     }
   },
   methods:{
-    
+    updateStartDate(date){
+      this.startDate = date
+    },
+    updateEndDate(date){
+      this.endDate = date
+    }
   },
   beforeMount() {
-    
+    let now = new Date();
+    let y = now.getFullYear();
+    let m = now.getMonth() + 1;
+    let d = now.getDate();
+    this.startDate = toDateFormat(y-1,m,d)
+    this.endDate = toDateFormat(y,m,d)
   }
 })

@@ -157,6 +157,13 @@ Vue.component('detailComponent', {
         </li>
       </ul>
     </main>
+    <footer>
+      <ul class="btns">
+      <li>
+        <button class="btn-box close" @click="$store.commit('closeOverlay')">關閉</button>
+      </li>
+      </ul>
+    </footer>
   </div>
   `,
   computed: {

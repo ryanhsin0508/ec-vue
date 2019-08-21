@@ -40,6 +40,7 @@ var titleName = {
 	MA001: "客戶代號",
 	MA002: "客戶名",
 	MB002: "品名",
+  p_number: "品號",
 	MONTH: "月份",
 	date: "日期",
 	number: "單據編號",
@@ -48,6 +49,8 @@ var titleName = {
 	count: "數量",
 	gift: "贈品量"
 };
+
+//required
 var sortLists = {
   customers: {
   	MA002: "客戶名",
@@ -66,6 +69,10 @@ var sortLists = {
   posting:{
   	MA002: "客戶名稱",
   	MA001: "客戶代號"
+  },
+  loaning:{
+    MA002: "客戶名稱",
+    MA001: "客戶代號"
   }
 };
 
@@ -101,11 +108,22 @@ var store = new Vuex.Store({
     filteredList(state, getters) {
       console.log(state.list)
       let filtered = state.list
+      console.time('aaa')
       if (state.search) {
-        filtered = state.list.filter(
-          item => item[state.searchBy].toLowerCase().indexOf(state.search.toLowerCase()) > -1
-        )
+        filtered = state.list.filter((item) => {
+          let res = false;
+          $.each(item,(k,v)=>{
+            if (typeof v == 'string') {
+              if (v.toLowerCase().indexOf(state.search.toLowerCase()) >= 0) {
+                res = true;
+              }
+            }
+          })
+          console.log(res)
+          return res;
+        })
       }
+      console.timeEnd('aaa')
       return filtered;
     },
 

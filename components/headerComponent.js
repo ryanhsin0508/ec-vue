@@ -24,7 +24,7 @@ Vue.component('headerComponent', {
               <li><a href="statement.php">應收對帳單</a></li>
               <li><a href="posting.php">寄庫資料</a></li>
               <li><a href="loaning.php">借出資料</a></li>
-              <li><a href="">變更密碼</a></li>
+              <li><a href="password.php">變更密碼</a></li>
               <li><a href="">登出</a></li>
             </ul>
           </nav>

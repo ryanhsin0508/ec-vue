@@ -8,21 +8,16 @@
 	echo $css;
 	echo $js;
 	?>
-	
+	<script src="components/passwordComponent.js"></script>
 	
 	<title>Document</title>
 </head>
 <body>
 	<section id="app">
 
-		<header-component title="寄庫資料"></header-component>
+		<header-component title="借出資料"></header-component>
 		<section class="content">
-			<filter-component type="posting"></filter-component>
-			<list-component 
-				type="posting" 
-				:call="['MA001', 'MA002']" 
-				:extended="['MB002','p_number','count', 'gift', 'date']">
-			</list-component>
+			<password-component></password-component>
 		</section>
 		<overlay-component v-if="$store.state.overlayVisible" :overlay-data="$store.state.overlayData"></overlay-component>
 		<div class="overlay-mask" v-if="$store.state.overlayMask"></div>

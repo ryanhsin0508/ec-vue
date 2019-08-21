@@ -15,13 +15,13 @@
 <body>
 	<section id="app">
 
-		<header-component title="寄庫資料"></header-component>
+		<header-component title="借出資料"></header-component>
 		<section class="content">
-			<filter-component type="posting"></filter-component>
+			<filter-component type="loaning"></filter-component>
 			<list-component 
-				type="posting" 
+				type="loaning" 
 				:call="['MA001', 'MA002']" 
-				:extended="['MB002','p_number','count', 'gift', 'date']">
+				:extended="['MB002', 'p_number', 'count', 'gift', 'date']">
 			</list-component>
 		</section>
 		<overlay-component v-if="$store.state.overlayVisible" :overlay-data="$store.state.overlayData"></overlay-component>

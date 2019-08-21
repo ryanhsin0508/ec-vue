@@ -12,7 +12,7 @@ Vue.component('filterComponent', {
   },
   template:`
     <section class="search-box custom-input">
-      <div class="flex">
+      <div class="flex search-input">
         <input 
           class="fg1" 
           style="margin-right: 10px;" 
