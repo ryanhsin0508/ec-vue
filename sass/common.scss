@@ -576,6 +576,7 @@ header.main-header {
       color: #ffffff;
       @media(min-width: 640px) {
       	min-width: 320px;
+      	box-sizing: border-box;
       	flex-grow: 1;
       	margin-right: 5px;
       	margin-bottom: 0;
@@ -607,10 +608,21 @@ header.main-header {
       }
     }
 		.list-extended{
+			width: 100%;
+			box-sizing: border-box;
 			.btns{
 				padding-top: 10px;
 			}
 			@media(min-width:640px){
+				.items{
+					ul{
+						display: -webkit-flex;
+						display: -moz-flex;
+						display: -ms-flex;
+						display: -o-flex;
+						display: flex;
+					}
+				}
 				.btns{
 					height: 100%;
 					padding-top: 0;
@@ -688,7 +700,7 @@ header.main-header {
 
       .date {
         right: 0;
-        bottom: 5px;
+        bottom: 0;
         color: $ef-green;
       }
 
@@ -791,10 +803,6 @@ header.main-header {
   width: 100%;
   height: 100%;
   z-index: 99;
-  display: -webkit-flex;
-  display: -moz-flex;
-  display: -ms-flex;
-  display: -o-flex;
   display: flex;
   align-items: center;
   justify-content: center;

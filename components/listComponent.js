@@ -3,15 +3,20 @@ Vue.component('listComponent', {
   data() {
     return {
       callArr: this.call,
-      extendedArr: this.extended
+      extendedArr: this.extended,
+      list:{},
+      search:""
     }
   },
   template: `
     <section class="list">
+      <filter-component :type="type" @searchList="searchList"></filter-component>
       <ul class="list-st1">
         <li 
           v-for="(items, index) in filteredList" 
-          :class="[type, {active:selected == index && (extended || type == 'customers')}]"
+          :class="[
+            type, 
+            {active:(selected == index && (extended || type == 'customers')) || type == 'orders'}]"
           @click="$store.commit('setNumber',{i:index,t:'selectedList'})">
           <div class="info flex between">
           <p v-for="v in callArr" :class="v">
@@ -24,7 +29,8 @@ Vue.component('listComponent', {
             :selected="selected"
             :extended="extendedArr"
             :data="items"
-            v-if="(selected == index && (extended || type == 'customers')) || $root.window.width > 640"
+            v-if="
+            (extended && selected == index || ($root.window.width > 640 || type == 'orders' || type == 'customers'))"
           ></list-extended-component>
         </li>
       </ul>
@@ -43,6 +49,29 @@ Vue.component('listComponent', {
       return this.$store.state.sortBy;
     },
     filteredList() {
+      let filtered = this.list;
+      if(this.search){
+        filtered = filtered.filter((item) => {
+          let res = false;
+          $.each(item,(k,v)=>{
+            if (typeof v == 'string') {
+              if (v.toLowerCase().indexOf(this.search.toLowerCase()) >= 0) {
+                res = true;
+              }
+            }
+          })
+          console.log(res)
+          return res;
+        })
+      }
+      let sortBy = Object.keys(this.$store.state.sortList)[this.$store.state.sortBy];
+      console.log(sortBy)
+      let sorted = filtered.sort((a, b) => {
+        return a[sortBy] > b[sortBy] ? 1 : -1
+      });
+      return sorted;
+
+    /*
       
       let sorted = [...this.$store.getters.filteredList];
       let sortList = this.$store.state.sortList;
@@ -56,9 +85,12 @@ Vue.component('listComponent', {
         return sorted.reverse()
       }
       return sorted;
-    }
+    */}
   },
   methods: {
+    searchList(v){
+      this.search = v;
+    },
     updatePrimary(swapped) {
       let currentPrimary = this.call[0];
       let idx;
@@ -76,8 +108,17 @@ Vue.component('listComponent', {
     }
   },
   created() {
-    this.$store.commit('init', this.type);
-
+    // this.$store.commit('init', this.type);
+    let list;
+    $.ajax({
+      url: `/ec-vue/json/${this.type}.json`,
+      async: false,
+      success: (data) => {
+        this.list = data['data']
+        console.log(data)
+      }
+    });
+    this.$store.commit('initSortList', this.type);
   }
 })
 
@@ -109,14 +150,13 @@ Vue.component('listExtendedComponent', {
         </ul>
       </template>
       <template v-else>
-          <ul class="custom-input grid2 spacing10 between" v-if="type == 'statement'">
-            <li>
-              <date-component :date="startDate" @update="updateStartDate"></date-component>
-            </li>
-            <li>
-              <date-component :date="endDate" @update="updateEndDate"></date-component>
-              
-            </li>
+        <ul class="custom-input grid2 spacing10 between" v-if="type == 'statement'">
+          <li>
+            <date-component :date="startDate" @update="updateStartDate"></date-component>
+          </li>
+          <li>
+            <date-component :date="endDate" @update="updateEndDate"></date-component>
+          </li>
           </ul>
         <ul class="items">
           <li v-for="(item, index) in filteredItems">

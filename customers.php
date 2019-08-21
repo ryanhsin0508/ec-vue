@@ -16,7 +16,7 @@
 	<section id="app">
 		<header-component title="客戶管理"></header-component>
 		<section class="content width-limiter">
-			<filter-component type="customers"></filter-component>
+			
 			<list-component type="customers" :call="['MA002','time']"></list-component>
 		</section>
 		<overlay-component v-if="$store.state.overlayVisible" :overlay-data="$store.state.overlayData"></overlay-component>

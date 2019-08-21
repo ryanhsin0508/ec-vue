@@ -1,9 +1,10 @@
 Vue.component('filterComponent', {
-  props:['type'],
+  props:['type', 'keyword'],
   data(){
     return {
       search:"",
       sort: this.$store.state.sortBy,
+      sortList:sortLists[this.type],
       sortReverse:false,
       menuActive: false,
       startDate:"",
@@ -18,7 +19,7 @@ Vue.component('filterComponent', {
           style="margin-right: 10px;" 
           type="text" 
           v-model="search"
-          @keyup="searchList"
+          @input="searchList($event)"
         />
         <button class="btn-search"><i class="fas fa-search"></i></button>
       </div>
@@ -40,10 +41,6 @@ Vue.component('filterComponent', {
       let sortName = Object.keys(this.sortList)[this.sort];
       console.log(sortName)
       return sortName 
-    },
-    sortList(){
-      console.log(this.$store.state.sortList)
-      return this.$store.state.sortList;
     },
     dateRange() {
         return [this.startDate.replace(/-/gi, ''),this.endDate.replace(/-/gi, '')]
@@ -68,9 +65,9 @@ Vue.component('filterComponent', {
     }
   },
   methods:{
-    searchList(){
-      this.$store.commit('searchBy', this.searchBy)
-      this.$store.commit('searchList', this.search)
+    searchList(e){
+      console.log(e.target.value)
+      this.$emit('searchList', e.target.value)
     },
     sortBy(i){
       console.log(i)

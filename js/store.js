@@ -1,41 +1,3 @@
-/*var sortLists = {
-  customers: [{
-    title: "名稱",
-    name: "MA002"
-  }, {
-    title: "最後更新時間",
-    name: "time"
-  }],
-  accounting: [{
-    title: "名稱",
-    name: "MA002"
-  }, {
-    title: "金額",
-    name: "amount"
-  }, {
-    title: "日期",
-    name: "time"
-  }],
-  statement:[{
-    title: "單據編號	",
-    name: "number"
-  },{
-    title: "日期",
-    name: "date"
-  },  {
-    title: "發票號碼	",
-    name: "invoice"
-  }, {
-    title: "應收帳款	",
-    name: "amount"
-  }, {
-    title: "品名",
-    name: "MB002"
-  }, {
-    title: "客戶代號",
-    name: "MA001"
-  }]
-};*/
 var titleName = {
 	MA001: "客戶代號",
 	MA002: "客戶名",
@@ -55,6 +17,9 @@ var sortLists = {
   customers: {
   	MA002: "客戶名",
   	time: "最後交易時間"
+  },
+  orders:{
+    product: "產品"
   },
   receivable:{
   	MA002: "客戶名",
@@ -169,6 +134,9 @@ var store = new Vuex.Store({
     },
     closeOverlay(state) {
       state.overlayVisible = false;
+    },
+    initSortList(state, type) {
+      state.sortList = sortLists[type];
     },
     init(state, type) {
       let list;

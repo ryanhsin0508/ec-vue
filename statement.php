@@ -16,7 +16,6 @@
 	<section id="app">
 		<header-component title="應收對帳單"></header-component>
 		<section class="content">
-			<filter-component type="statement"></filter-component>
 			<list-component 
 				type="statement" 
 				:call="['MA002','MA001']" 

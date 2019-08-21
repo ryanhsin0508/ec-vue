@@ -17,7 +17,6 @@
 
 		<header-component title="借出資料"></header-component>
 		<section class="content">
-			<filter-component type="loaning"></filter-component>
 			<list-component 
 				type="loaning" 
 				:call="['MA001', 'MA002']" 

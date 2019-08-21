@@ -10,7 +10,7 @@
 // var token = getToken();
 function getData(url){
   return JSON.parse($.ajax({
-      url: '/ec-vue/json/orders.json',
+      url: '/ec-vue/json/' + url + '.json',
       async: false,
       success: (data) => {
         this.productList = data.data;

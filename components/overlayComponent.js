@@ -144,18 +144,13 @@ Vue.component('detailComponent', {
       <button class="btn-close" @click="$store.commit('closeOverlay')"></button>
     </header>
     <main class="content">
-      <filter-component type="customers"></filter-component>
-      <ul class="list-st1">
-        <li class="active" v-for="item in orders">
-          <div class="info">{{item.product}}</div>
-          <div class="list-extended" style="padding-bottom:calc(1em + 10px)">
-            <p style="float:left">數量：{{item.count}}</p>
-            <p>贈品：{{item.gift}}</p>
-            <p>備註：{{item.note}}</p>
-            <p class="date">{{item.date}}</p>
-          </div>
-        </li>
-      </ul>
+      <list-component 
+        type="orders" 
+        :call="['product']"
+        :extended="['count','gift','date']"
+      >
+      </list-component>
+      
     </main>
     <footer>
       <ul class="btns">
@@ -172,6 +167,6 @@ Vue.component('detailComponent', {
     }
   },
   beforeMount() {
-    this.orders = getData().data;
+    this.orders = getData('orders').data;
   }
 })

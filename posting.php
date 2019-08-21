@@ -17,7 +17,6 @@
 
 		<header-component title="寄庫資料"></header-component>
 		<section class="content">
-			<filter-component type="posting"></filter-component>
 			<list-component 
 				type="posting" 
 				:call="['MA001', 'MA002']" 
