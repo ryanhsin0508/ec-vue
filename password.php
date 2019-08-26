@@ -16,7 +16,7 @@
 	<section id="app">
 
 		<header-component title="借出資料"></header-component>
-		<section class="content">
+		<section class="content width-limiter">
 			<password-component></password-component>
 		</section>
 		<overlay-component v-if="$store.state.overlayVisible" :overlay-data="$store.state.overlayData"></overlay-component>

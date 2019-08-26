@@ -15,7 +15,7 @@
 <body>
 	<section id="app">
 		<header-component title="應收對帳單"></header-component>
-		<section class="content">
+		<section class="content width-limiter">
 			<list-component 
 				type="statement" 
 				:call="['MA002','MA001']" 

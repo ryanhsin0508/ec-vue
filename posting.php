@@ -16,10 +16,10 @@
 	<section id="app">
 
 		<header-component title="寄庫資料"></header-component>
-		<section class="content">
+		<section class="content width-limiter">
 			<list-component 
 				type="posting" 
-				:call="['MA001', 'MA002']" 
+				:call="['MA002', 'MA001']" 
 				:extended="['MB002','p_number','count', 'gift', 'date']">
 			</list-component>
 		</section>

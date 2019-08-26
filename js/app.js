@@ -1,3 +1,12 @@
+function ready(fn) {
+  if (document.readyState != 'loading'){
+    fn();
+  } else {
+    document.addEventListener('DOMContentLoaded', function(){
+    	
+    });
+  }
+}
 $(function(){
 	var vm = new Vue({
 		el:'#app',

@@ -57,41 +57,13 @@ var store = new Vuex.Store({
   state: {
     search: "",
     searchBy: '',
-    sortList: [{}],
-    sortBy: 0,
-    sortReverse:false,
     dateRange:[],
     list: [],
     titleName: titleName,
-    selectedList: undefined,
     overlayMask: false,
     overlayVisible: false,
     overlayData: {},
     overlayType: ""
-  },
-  getters: {
-    filteredList(state, getters) {
-      console.log(state.list)
-      let filtered = state.list
-      console.time('aaa')
-      if (state.search) {
-        filtered = state.list.filter((item) => {
-          let res = false;
-          $.each(item,(k,v)=>{
-            if (typeof v == 'string') {
-              if (v.toLowerCase().indexOf(state.search.toLowerCase()) >= 0) {
-                res = true;
-              }
-            }
-          })
-          console.log(res)
-          return res;
-        })
-      }
-      console.timeEnd('aaa')
-      return filtered;
-    },
-
   },
   mutations: {
     toggleOverlayMask(state) {
@@ -109,10 +81,6 @@ var store = new Vuex.Store({
     memorizeSort() {
 
     },
-    sortBy(state, payload) {
-      state.sortBy = payload.val;
-      state.sortReverse = payload.reverse
-    },
     showOverlay(state, payload) {
       state.overlayData = payload.data
       state.overlayType = payload.type
@@ -128,30 +96,8 @@ var store = new Vuex.Store({
     toggle(state, target){
 
     },
-    setNumber(state, payload){
-    	console.log(payload.t)
-    	state[payload.t] = state[payload.t] == payload.i ? undefined : payload.i;
-    },
     closeOverlay(state) {
       state.overlayVisible = false;
-    },
-    initSortList(state, type) {
-      state.sortList = sortLists[type];
-    },
-    init(state, type) {
-      let list;
-      let sorted = []
-      console.log(type)
-      $.ajax({
-        url: `/ec-vue/json/${type}.json`,
-        async: false,
-        success: (data) => {
-          list = data
-          console.log(data)
-        }
-      })
-      state.list = list['data']
-      state.sortList = sortLists[type];
     }
   }
 })

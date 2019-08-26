@@ -5,7 +5,11 @@ Vue.component('listComponent', {
       callArr: this.call,
       extendedArr: this.extended,
       list:{},
-      search:""
+      search:"",
+      sortBy:0,
+      sortList:[{}],
+      sortReverse: false,
+      selected:null,
     }
   },
   template: `
@@ -16,8 +20,9 @@ Vue.component('listComponent', {
           v-for="(items, index) in filteredList" 
           :class="[
             type, 
-            {active:(selected == index && (extended || type == 'customers')) || type == 'orders'}]"
-          @click="$store.commit('setNumber',{i:index,t:'selectedList'})">
+            {active:
+              (extended && (selected == index)) || (selected == index && type == 'cusomers') || type == 'orders'}]"
+          @click="selected = selected == index ? null :index ">
           <div class="info flex between">
           <p v-for="v in callArr" :class="v">
             <template v-if="v == 'amount'">{{items[v] | dollarConvert}}</template>
@@ -30,7 +35,10 @@ Vue.component('listComponent', {
             :extended="extendedArr"
             :data="items"
             v-if="
-            (extended && selected == index || ($root.window.width > 640 || type == 'orders' || type == 'customers'))"
+            (extended && (selected == index)) || 
+            (selected == index && type == 'customers') || 
+            type == 'orders'
+            "
           ></list-extended-component>
         </li>
       </ul>
@@ -42,14 +50,9 @@ Vue.component('listComponent', {
     }
   },
   computed: {
-    selected() {
-      return this.$store.state.selectedList
-    },
-    sortBy() {
-      return this.$store.state.sortBy;
-    },
     filteredList() {
       let filtered = this.list;
+      let reverse = this.sortReverse;
       if(this.search){
         filtered = filtered.filter((item) => {
           let res = false;
@@ -64,11 +67,15 @@ Vue.component('listComponent', {
           return res;
         })
       }
-      let sortBy = Object.keys(this.$store.state.sortList)[this.$store.state.sortBy];
+      let sortBy = Object.keys(this.sortList)[this.sortBy];
       console.log(sortBy)
       let sorted = filtered.sort((a, b) => {
         return a[sortBy] > b[sortBy] ? 1 : -1
       });
+      if (reverse) {
+        return sorted.reverse()
+      }
+      // this.updatePrimary(sortBy);
       return sorted;
 
     /*
@@ -118,7 +125,7 @@ Vue.component('listComponent', {
         console.log(data)
       }
     });
-    this.$store.commit('initSortList', this.type);
+    this.sortList = sortLists[this.type];
   }
 })
 
@@ -133,7 +140,11 @@ Vue.component('listExtendedComponent', {
   },
 
   template: `
-    <div class="list-extended" :class="{'no-style': type == 'customers'}" @click.stop>
+    <div 
+      class="list-extended" 
+      :class="{'no-style': type == 'customers'}" 
+      @click.stop
+    >
       <template v-if="type == 'customers'">
         <ul class="btns square grid2 spacing10 between">
           <li>
@@ -185,7 +196,7 @@ Vue.component('listExtendedComponent', {
           <ul class="total">
             <li>上期結欠：</li>
             <li>本期未收：</li>
-            <li class="amount">總應收帳款：{{totalAmount}}</li>
+            <li class="amount">總應收帳款：{{totalAmount | dollarConvert}}</li>
           </ul>
         </template>
       </template>

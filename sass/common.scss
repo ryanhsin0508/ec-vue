@@ -352,21 +352,27 @@ header.main-header {
     .c-year {
       color: $violetblue;
       margin: 0 !important;
-
+      background-color: #fff;
+			position: sticky;
+			top: 0;
     }
 
     .c-month {
       margin-top: 0 !important;
       color: #ffffff;
       background-color: $violetblue;
-
+			position: sticky;
+			top:36px;
+      li{
+        display: block !important;
+      }
       &.active {
         color: #333;
-        background-color: transparent;
+        background-color: white;
         display: flex;
         flex-wrap: wrap;
 
-        li {
+        li { 
           width: calc(100% / 3);
           border: 1px solid #ccc;
           box-sizing: border-box;
@@ -382,7 +388,7 @@ header.main-header {
     .c-date {
       li {
         border-bottom: 1px solid #ccc;
-
+        display: block !important;
         &.now {
           background-color: #d0ffe0;
         }
@@ -548,15 +554,36 @@ header.main-header {
 }
 
 .list-st1 {
-
+  @media(min-width: 640px) {
+    display: flex;
+    flex-wrap: wrap;
+    // justify-content: space-between;
+    >li{
+      width: calc(50% - 5px);
+      margin-right: 10px;
+      &:nth-child(2n){
+        margin-right: 0;
+      }
+    }
+  }
+  @media(min-width:1000px){
+    >li{
+      width: calc(100% / 3 -5px);
+      margin-right: 7px;
+      &:nth-child(2n){
+        margin-right: 7px;
+      }
+      &:nth-child(3n){
+        margin-right: 0;
+      }
+    }
+  }
   >li {
     margin-top: 10px;
     margin-bottom: 10px;
 
     @media(min-width: 640px) {
-      display: flex;
       // margin: 0;
-      justify-content: space-between;
     }
 
     p:not(:last-child) {
@@ -575,10 +602,8 @@ header.main-header {
       border-radius: 5px;
       color: #ffffff;
       @media(min-width: 640px) {
-      	min-width: 320px;
       	box-sizing: border-box;
       	flex-grow: 1;
-      	margin-right: 5px;
       	margin-bottom: 0;
       }
 
@@ -601,9 +626,9 @@ header.main-header {
       >.info {
         border-bottom-left-radius: 0;
         border-bottom-right-radius: 0;
+          background-color: $ef-green;
 
         @media(max-width: 640px) {
-          background-color: $ef-green;
         }
       }
     }
@@ -616,23 +641,15 @@ header.main-header {
 			@media(min-width:640px){
 				.items{
 					ul{
-						display: -webkit-flex;
-						display: -moz-flex;
-						display: -ms-flex;
-						display: -o-flex;
-						display: flex;
 					}
 				}
 				.btns{
 					height: 100%;
-					padding-top: 0;
 					li{
 						min-width: 80px;
-						margin-left: 5px;
 					}
 					button{
 						display: flex;
-						height: 100%;
 						white-space: nowrap;
 						min-width: 80px;
 						justify-content: center;
@@ -754,6 +771,8 @@ header.main-header {
   min-width: 200px;
 
   h3 {
+    display: flex;
+    align-items: center;
     position: relative;
     border-radius: 5px;
     padding-left: 15px;
@@ -761,7 +780,19 @@ header.main-header {
     background-color: $violetblue;
     line-height: 36px;
     color: #ffffff;
-
+    &:before{
+      content:"";
+      border-left: 4px solid transparent;
+      border-right: 4px solid transparent;
+      border-bottom: 5px solid white;
+      margin-right: 5px;
+    }
+    &.desc{
+      &:before{
+        border-top: 5px solid white;
+        border-bottom: none;
+      }
+    }
     &:after {
       position: absolute;
       content: "";
@@ -807,14 +838,22 @@ header.main-header {
   align-items: center;
   justify-content: center;
   .overlay-wrapper{
+    display: flex;
   	width: 100%;
+    justify-content: center;
+    align-items: center;
   	.overlay-container {
   	  background-color: #fff;
   	  min-height: 100vh;
+        width: 100%;
   	  position: relative;
 			@media(min-width:640px){
-
+        min-height: 0;
+        width: calc(100% - 20px);
 			}
+      @media(min-width:1000px){
+        width: 1000px;
+      }
   	  header {
   	    box-sizing: border-box;
   	    display: flex;
@@ -831,9 +870,12 @@ header.main-header {
 
   	  main {
   	    overflow: auto;
-  	    height: calc(100vh - 90px);
   	    padding-bottom: 50px;
   	    box-sizing: border-box;
+        @media (max-width:640px){
+  	    height: calc(100vh - 90px);
+
+        }
   	  }
 
   	  footer {

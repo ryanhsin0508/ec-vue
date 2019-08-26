@@ -37,7 +37,8 @@ Vue.component('orderComponent', {
         count: 0,
         gift: 0,
         note: ""
-      }
+      },
+      date:""
     }
   },
   template: `
@@ -56,7 +57,7 @@ Vue.component('orderComponent', {
         </div>
         <form action="">
           <div class="custom-input hor">
-            <input type="date" style="width:100%;"/>
+            <date-component :date="date" @update=""></date-component>
             <ul>
               <li class="custom-select">
                 <h3>單據別</h3>
@@ -120,6 +121,12 @@ Vue.component('orderComponent', {
     }
   },
   beforeMount() {
+      let now = new Date();
+      let y = now.getFullYear();
+      let m = now.getMonth() + 1;
+      let d = now.getDate();
+      this.date = toDateFormat(y,m,d)
+    
     $.ajax({
       url: '/ec-vue/json/newOrder.json',
       async: false,
@@ -138,7 +145,7 @@ Vue.component('detailComponent', {
     }
   },
   template: `
-  <div class="overlay-container">
+  <div class="overlay-container" @click.stop="">
     <header class="flex">
       <h3>「{{overlayData.MA002}}」明細</h3>
       <button class="btn-close" @click="$store.commit('closeOverlay')"></button>
@@ -164,6 +171,11 @@ Vue.component('detailComponent', {
   computed: {
     filteredList() {
 
+    }
+  },
+  methods:{
+    test(){
+      alert('dff')
     }
   },
   beforeMount() {

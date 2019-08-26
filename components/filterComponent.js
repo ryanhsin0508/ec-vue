@@ -3,7 +3,7 @@ Vue.component('filterComponent', {
   data(){
     return {
       search:"",
-      sort: this.$store.state.sortBy,
+      sort: 0,
       sortList:sortLists[this.type],
       sortReverse:false,
       menuActive: false,
@@ -24,7 +24,12 @@ Vue.component('filterComponent', {
         <button class="btn-search"><i class="fas fa-search"></i></button>
       </div>
       <div class="sort dropdown-menu">
-        <h3 @click="menuActive = menuActive ? menuActive = false : menuActive = true">{{sortList[Object.keys(sortList)[sort]]}}</h3>
+        <h3 
+          :class="sortReverse ? 'desc' : 'asc'"
+          @click="menuActive = menuActive ? menuActive = false : menuActive = true"
+        >
+          {{sortList[Object.keys(sortList)[sort]]}}
+        </h3>
         <ul :class="{active: menuActive}">
           <li
             v-for="(v, k, i) in sortList"
@@ -67,7 +72,8 @@ Vue.component('filterComponent', {
   methods:{
     searchList(e){
       console.log(e.target.value)
-      this.$emit('searchList', e.target.value)
+      this.$parent.searchList(e.target.value)
+      // this.$emit('searchList', e.target.value)
     },
     sortBy(i){
       console.log(i)
@@ -77,9 +83,12 @@ Vue.component('filterComponent', {
       } else {
         this.sortReverse = false;
       }
+      this.$parent.sortBy = i;
+      this.$parent.sortReverse = this.sortReverse;
+      
       this.sort = i;
       this.menuActive = false;
-      this.$store.commit('sortBy', {val:this.sort,reverse:this.sortReverse})
+      // this.$store.commit('sortBy', {val:this.sort,reverse:this.sortReverse})
     }
   }
 })

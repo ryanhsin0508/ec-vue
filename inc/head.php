@@ -4,6 +4,7 @@ $css = '
 <link rel="stylesheet" type="text/css" href="css/reset.css">
 <link rel="stylesheet" type="text/css" href="css/all.css">
 <link rel="stylesheet" type="text/css" href="css/common.css"></link>
+<link rel="stylesheet" type="text/css" href="css/custom.css"></link>
 <link rel="stylesheet" href="/css/nouislider.css">
 ';
 $js = '
